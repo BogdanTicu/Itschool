@@ -43,5 +43,25 @@ public class CustomerController {
         ResponseCustomerDTO customer = customerService.save(customerDTO);
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
     }
+        @GetMapping("/{id}")
+    public ResponseEntity<ResponseCustomerDTO> getCustomerById(@PathVariable("id") Long id) {
+        ResponseCustomerDTO customer = customerService.findById(id);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable("id") Long id, @Valid @RequestBody CustomerDTO customerDTO, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//        CustomerDTO updatedCustomer = customerService.update(id, customerDTO);
+//        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable("id") Long id) {
+       CustomResponseDTO response = new CustomResponseDTO();
+        response.setMessage(customerService.deleteCustomer(id));
+        return new ResponseEntity<>(response.getMessage(), HttpStatus.OK);
+    }
 
 }
