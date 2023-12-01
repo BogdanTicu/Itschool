@@ -1,6 +1,6 @@
 package org.example.model.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 
 @AllArgsConstructor
@@ -9,9 +9,15 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "orders")
 public class Order {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "customer_id")
     private int customerId;
+    @Column(name = "product_id")
     private int productId;
-    private int totalPrice;
+    @Column(name = "product_quantity")
+    private int product_quantity;
 }
