@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,4 +24,6 @@ public class Product {
     private double price;
     @Column(name = "product_number_of_tables")
     private Date age;
+    @ManyToMany(mappedBy = "product")
+    private Set<Order> orders;
 }
