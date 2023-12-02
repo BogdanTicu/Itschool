@@ -35,11 +35,6 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) {
         productService.delete(id);
-        try {
-            productService.delete(id);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Product does not exist");
-        }
         return ResponseEntity.ok("Product deleted");
     }
     @PatchMapping("/{id}")

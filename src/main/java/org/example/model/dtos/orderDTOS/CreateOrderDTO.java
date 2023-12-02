@@ -8,5 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 public class CreateOrderDTO {
-
+    private Long customer_id;
+    private Long product_id;
+    private int product_quantity;
 }

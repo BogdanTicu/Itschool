@@ -1,7 +1,6 @@
 package org.example.model.dtos.customerDTOS;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 
 import lombok.*;
 
@@ -10,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class PutClientDTO {
+public class PutCustomerDTO {
     private String name;
     @Email(message = "Email should be valid")
     private String email;
