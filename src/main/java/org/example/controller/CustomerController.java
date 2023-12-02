@@ -63,5 +63,13 @@ public class CustomerController {
         response.setMessage(customerService.deleteCustomer(id));
         return new ResponseEntity<>(response.getMessage(), HttpStatus.OK);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseCustomerDTO> updateCustomer(@PathVariable("id") Long id, @Valid @RequestBody CreateCustomerDTO customerDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        ResponseCustomerDTO updatedCustomer = customerService.updateCustomer(id, customerDTO);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    }
 
 }

@@ -35,18 +35,20 @@ public class CustomerService {
         return clientMapper.toDTO(savedCustomer);
 
     }
-        public ResponseCustomerDTO findById(Long id) {
+    public ResponseCustomerDTO findById(Long id) {
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Client not found"));
         return clientMapper.toDTO(customer);
     }
-
-//    public ResponseCustomerDTO update(Long id, CreateCustomerDTO customerDTO) {
-//        // trebuie verificat daca clientul exista in baza de date
-//        // daca exista ii facem o mapare cu datele din patchClientDTO in clientul din baza de date si salvam clientul in baza de date cu datele actualizate si returnam clientul actualizat
-//        // daca nu exista aruncam o exceptie
-//        // trebuie verificat daca ce primim in patchClientDTO este este diferit de ce avem in baza de date
-//
-//    }
+    public ResponseCustomerDTO updateCustomer(Long id, CreateCustomerDTO customerDTO) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Client not found"));
+        customer.setName(customerDTO.getName());
+        customer.setEmail(customerDTO.getEmail());
+        customer.setPhone(customerDTO.getPhone());
+        customer.setAddress(customerDTO.getAddress());
+        customer.setAge(customerDTO.getAge());
+        Customer savedCustomer = customerRepository.save(customer);
+        return clientMapper.toDTO(savedCustomer);
+    }
 
 
     public String deleteCustomer(Long id)
