@@ -1,10 +1,10 @@
 package org.example.service;
 
-import org.example.model.dtos.CustomerDTO;
 import org.example.model.dtos.customerDTOS.CreateCustomerDTO;
 import org.example.model.dtos.customerDTOS.ResponseCustomerDTO;
 import org.example.model.entity.Customer;
 import org.example.repository.CustomerRepository;
+import org.example.service.mappers.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +56,12 @@ public class CustomerService {
         customerRepository.deleteById(id);
         return "Customer removed !! " + id;
      }
+
+    public List<ResponseCustomerDTO> findByMailOrPhone(String mail, String phone) {
+        List<Customer> customers = customerRepository.findByEmailOrPhone(mail, phone);
+        return customers.stream()
+                .map(clientMapper::toDTO)
+                .toList();
+    }
 }
 

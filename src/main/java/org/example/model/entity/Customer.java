@@ -1,6 +1,7 @@
 package org.example.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class Customer {
     private Long id;
     @Column(name = "customer_name")
     private String name;
+
     @Column(name = "customer_email")
     private String email;
     @Column(name = "customer_phone")

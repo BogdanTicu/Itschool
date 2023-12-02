@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.service.mappers;
 
 import org.example.model.dtos.customerDTOS.CreateCustomerDTO;
 import org.example.model.dtos.customerDTOS.ResponseCustomerDTO;

@@ -2,11 +2,9 @@ package org.example.controller;
 
 import jakarta.validation.Valid;
 import org.example.model.dtos.CustomResponseDTO;
-import org.example.model.dtos.CustomerDTO;
-import org.example.model.dtos.ProductDTO;
 import org.example.model.dtos.customerDTOS.CreateCustomerDTO;
 import org.example.model.dtos.customerDTOS.ResponseCustomerDTO;
-import org.example.service.CustomerMapper;
+import org.example.service.mappers.CustomerMapper;
 import org.example.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +35,11 @@ public class CustomerController {
 
     @PostMapping(path = "/add")
     public ResponseEntity<ResponseCustomerDTO> addCustomer(@Valid @RequestBody CreateCustomerDTO customerDTO, BindingResult bindingResult) {
+        CustomResponseDTO responseDTO = new CustomResponseDTO();
         if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getFieldErrors().get(0).getDefaultMessage();
+            responseDTO.setData(null);
+            responseDTO.setMessage(errorMessage);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         ResponseCustomerDTO customer = customerService.save(customerDTO);
@@ -49,14 +51,7 @@ public class CustomerController {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable("id") Long id, @Valid @RequestBody CustomerDTO customerDTO, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        CustomerDTO updatedCustomer = customerService.update(id, customerDTO);
-//        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
-//    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCustomer(@PathVariable("id") Long id) {
        CustomResponseDTO response = new CustomResponseDTO();
@@ -71,5 +66,12 @@ public class CustomerController {
         ResponseCustomerDTO updatedCustomer = customerService.updateCustomer(id, customerDTO);
         return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
-
+    @GetMapping("/mailOrPhone")
+    public ResponseEntity<CustomResponseDTO> getCustomerByMailOrPhone(@RequestParam(required = false) String mail, @RequestParam(required = false) String phone) {
+        List<ResponseCustomerDTO> customers = customerService.findByMailOrPhone(mail, phone);
+        CustomResponseDTO response = new CustomResponseDTO();
+        response.setData(customers);
+        //response.setMessage("Customers with mail " + mail + " or phone " + phone);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

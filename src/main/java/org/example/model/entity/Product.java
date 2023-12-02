@@ -20,10 +20,12 @@ public class Product {
     private Long id;
     @Column(name = "product_name")
     private String brand;
+    @Column(name = "model")
+    private String model;
     @Column(name = "product_type")
     private double price;
     @Column(name = "product_number_of_tables")
-    private Date age;
+    private Long year;
     @ManyToMany(mappedBy = "product")
     private Set<Order> orders;
 }
